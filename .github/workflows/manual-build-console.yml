@@ -20,22 +20,18 @@ jobs:
       with:
         node-version: 18
     - name: Run yarn install
-      uses: borales/actions-yarn@v5
-      with:
-        dir: vue3
-        cmd: install
+      run: yarn install
+      working-directory: vue3
     - name: Run yarn build
-      uses: borales/actions-yarn@v5
-      with:
-        dir: vue3
-        cmd: build
+      run: yarn build
+      working-directory: vue3
     - run: |
         python -m venv venv
         venv\Scripts\activate.ps1
         pip install poetry
         poetry install
         poetry run pyinstaller --noconfirm --onefile --console --icon "./web/favicon.ico" --add-data "./module/*.exe;./module/" --add-data "./web;web/"  "./main.py" --additional-hooks-dir=".\\hooks" --name "NsEmuTools-console"
-    - uses: actions/upload-artifact@v3
+    - uses: actions/upload-artifact@v4
       with:
         path: dist/*
         name: NsEmuTools-console
