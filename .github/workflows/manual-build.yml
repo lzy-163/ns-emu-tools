@@ -31,10 +31,11 @@ jobs:
         cmd: build
     - run: |
         python -m venv venv
-        venv\Scripts\activate.ps1
+        .\venv\Scripts\Activate.ps1
         pip install poetry
         poetry install
         poetry run pyinstaller --noconfirm --onefile --windowed --icon "./web/favicon.ico" --add-data "./module/*.exe;./module/" --add-data "./web;web/" --additional-hooks-dir=".\\hooks" "./main_devnull.py" --name "NsEmuTools"
+      shell: pwsh
     - uses: actions/upload-artifact@v3
       with:
         path: dist/*
